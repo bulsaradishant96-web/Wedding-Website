@@ -204,6 +204,11 @@
       </div>
 
       <div class="form-row">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+
+      <div class="form-row">
         <label>Will you be attending?</label>
         <div class="radio-group">
           <label class="radio-pill"><input type="radio" name="attending" value="Joyfully Accepts" required> Joyfully Accepts</label>
@@ -219,12 +224,12 @@
       <fieldset class="form-row">
         <legend>Which events will you attend?</legend>
         <div class="check-group">
-          <label class="check-pill"><input type="checkbox" name="events" value="Pithi (Feb 10)"> Pithi</label>
-          <label class="check-pill"><input type="checkbox" name="events" value="Gruh Shantak (Feb 11)"> Gruh Shantak</label>
-          <label class="check-pill"><input type="checkbox" name="events" value="Garba Night (Feb 11)"> Garba Night</label>
-          <label class="check-pill"><input type="checkbox" name="events" value="Bus Departs for Barat (Feb 12)"> Bus Departs for Barat</label>
-          <label class="check-pill"><input type="checkbox" name="events" value="Varghodo (Feb 12)"> Varghodo</label>
-          <label class="check-pill"><input type="checkbox" name="events" value="Reception (Feb 13)"> Reception</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Pithi"> Pithi (Feb 10)</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Gruh Shantak"> Gruh Shantak (Feb 11)</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Garba Night"> Garba Night (Feb 11)</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Bus Departs for Barat"> Bus Departs for Barat (Feb 12)</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Varghodo"> Varghodo (Feb 12)</label>
+          <label class="check-pill"><input type="checkbox" name="events" value="Reception"> Reception (Feb 13)</label>
         </div>
       </fieldset>
 
@@ -233,9 +238,19 @@
         <textarea id="message" name="message" rows="3" placeholder="Leave us a note..."></textarea>
       </div>
 
-      <button type="submit" class="submit-btn">Send RSVP</button>
-      <p class="form-note" id="formNote">This opens your email app with your RSVP details pre-filled to send to us.</p>
+      <button type="submit" class="submit-btn" id="submitBtn">Send RSVP</button>
+      <p class="form-note">You'll get an emailed copy of your response once you submit.</p>
     </form>
+
+    <div class="rsvp-success" id="rsvpSuccess" hidden>
+      <svg viewBox="0 0 60 60" class="mini-motif" aria-hidden="true"><path d="M30 6 C38 18 52 22 54 30 C52 38 38 42 30 54 C22 42 8 38 6 30 C8 22 22 18 30 6 Z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      <p class="rsvp-success-title">Thank you!</p>
+      <p>Your RSVP has been sent. Check your inbox for a confirmation copy.</p>
+    </div>
+
+    <div class="rsvp-error" id="rsvpError" hidden>
+      <p>Something went wrong sending your RSVP. Please try again, or email us directly at <a href="mailto:cyberinfo1120@gmail.com">cyberinfo1120@gmail.com</a>.</p>
+    </div>
   </div>
 </section>
 

@@ -88,28 +88,44 @@ function updateCountdown(){
 updateCountdown();
 countdownTimer = setInterval(updateCountdown, 1000);
 
-// ---------- RSVP form -> mailto ----------
+// ---------- RSVP form -> Google Apps Script Web App ----------
 const rsvpForm = document.getElementById('rsvpForm');
-const RSVP_EMAIL = 'cyberinfo1120@gmail.com';
+const submitBtn = document.getElementById('submitBtn');
+const rsvpSuccess = document.getElementById('rsvpSuccess');
+const rsvpError = document.getElementById('rsvpError');
+
+const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyYRPZlLTLZZlsQ1ryAtvw7D5foe_7l9KLW83EziEtGPBOecjNsJOXpkxttlv5BJbvt/exec';
 
 rsvpForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const name = rsvpForm.name.value.trim();
-  const attending = rsvpForm.attending.value;
-  const guests = rsvpForm.guests.value;
-  const events = Array.from(rsvpForm.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
-  const message = rsvpForm.message.value.trim();
+  const payload = {
+    name: rsvpForm.name.value.trim(),
+    email: rsvpForm.email.value.trim(),
+    attending: rsvpForm.attending.value,
+    guests: rsvpForm.guests.value,
+    events: Array.from(rsvpForm.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value),
+    message: rsvpForm.message.value.trim()
+  };
 
-  const subject = `RSVP - ${name} (${attending})`;
-  const bodyLines = [
-    `Name: ${name}`,
-    `Response: ${attending}`,
-    `Number of Guests: ${guests}`,
-    `Attending: ${events.length ? events.join(', ') : 'Not specified'}`,
-    message ? `Message: ${message}` : null
-  ].filter(Boolean);
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  rsvpError.hidden = true;
 
-  const mailto = `mailto:${RSVP_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-  window.location.href = mailto;
+  fetch(RSVP_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.result !== 'success') throw new Error(data.message || 'Unknown error');
+      rsvpForm.hidden = true;
+      rsvpSuccess.hidden = false;
+    })
+    .catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send RSVP';
+      rsvpError.hidden = false;
+    });
 });
