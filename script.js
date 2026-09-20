@@ -30,11 +30,12 @@ function buildICS({ title, start, end, details, location }){
   ].filter(Boolean).join('\r\n');
 }
 
-document.querySelectorAll('a.add-to-cal').forEach(link => {
-  link.addEventListener('click', (e) => {
-    if (!isIOS()) return; // Android / desktop: default Google Calendar link works as-is
+function toBase64Utf8(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
 
-    e.preventDefault();
+if (isIOS()){
+  document.querySelectorAll('a.add-to-cal').forEach(link => {
     const url = new URL(link.href);
     const params = url.searchParams;
     const [start, end] = (params.get('dates') || '').split('/');
@@ -47,9 +48,12 @@ document.querySelectorAll('a.add-to-cal').forEach(link => {
       location: params.get('location')
     });
 
-    window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    // Rewrite the link itself (rather than intercepting the click) so Safari
+    // treats this as a normal tap-to-open-file, not a script-driven redirect.
+    link.setAttribute('href', 'data:text/calendar;charset=utf-8;base64,' + toBase64Utf8(ics));
+    link.removeAttribute('target');
   });
-});
+}
 
 // ---------- Nav shrink on scroll ----------
 const nav = document.getElementById('siteNav');
