@@ -1,3 +1,56 @@
+// ---------- Add to Calendar: .ics on iOS, Google Calendar everywhere else ----------
+function isIOS(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+function icsEscape(str){
+  return (str || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+}
+
+function icsTimestamp(date){
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}
+
+function buildICS({ title, start, end, details, location }){
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Dishant & Nirshita Wedding//EN',
+    'BEGIN:VEVENT',
+    'UID:' + Date.now() + '-' + Math.random().toString(36).slice(2) + '@ngdb.me',
+    'DTSTAMP:' + icsTimestamp(new Date()),
+    'DTSTART:' + start,
+    'DTEND:' + end,
+    'SUMMARY:' + icsEscape(title),
+    details ? 'DESCRIPTION:' + icsEscape(details) : '',
+    location ? 'LOCATION:' + icsEscape(location) : '',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].filter(Boolean).join('\r\n');
+}
+
+document.querySelectorAll('a.add-to-cal').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (!isIOS()) return; // Android / desktop: default Google Calendar link works as-is
+
+    e.preventDefault();
+    const url = new URL(link.href);
+    const params = url.searchParams;
+    const [start, end] = (params.get('dates') || '').split('/');
+
+    const ics = buildICS({
+      title: params.get('text'),
+      start,
+      end,
+      details: params.get('details'),
+      location: params.get('location')
+    });
+
+    window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+  });
+});
+
 // ---------- Nav shrink on scroll ----------
 const nav = document.getElementById('siteNav');
 function updateNav(){
@@ -112,12 +165,19 @@ rsvpForm.addEventListener('submit', (e) => {
   submitBtn.textContent = 'Sending...';
   rsvpError.hidden = true;
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+
   fetch(RSVP_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    signal: controller.signal
   })
-    .then(res => res.json())
+    .then(res => {
+      clearTimeout(timeout);
+      return res.json();
+    })
     .then(data => {
       if (data.result !== 'success') throw new Error(data.message || 'Unknown error');
       rsvpForm.hidden = true;
