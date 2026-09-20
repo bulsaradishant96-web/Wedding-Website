@@ -1,56 +1,12 @@
-// ---------- Add to Calendar: .ics on iOS, Google Calendar everywhere else ----------
+// ---------- Add to Calendar: real .ics file on iOS, Google Calendar everywhere else ----------
 function isIOS(){
   return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
 
-function icsEscape(str){
-  return (str || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
-}
-
-function icsTimestamp(date){
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-}
-
-function buildICS({ title, start, end, details, location }){
-  return [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Dishant & Nirshita Wedding//EN',
-    'BEGIN:VEVENT',
-    'UID:' + Date.now() + '-' + Math.random().toString(36).slice(2) + '@ngdb.me',
-    'DTSTAMP:' + icsTimestamp(new Date()),
-    'DTSTART:' + start,
-    'DTEND:' + end,
-    'SUMMARY:' + icsEscape(title),
-    details ? 'DESCRIPTION:' + icsEscape(details) : '',
-    location ? 'LOCATION:' + icsEscape(location) : '',
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].filter(Boolean).join('\r\n');
-}
-
-function toBase64Utf8(str){
-  return btoa(unescape(encodeURIComponent(str)));
-}
-
 if (isIOS()){
-  document.querySelectorAll('a.add-to-cal').forEach(link => {
-    const url = new URL(link.href);
-    const params = url.searchParams;
-    const [start, end] = (params.get('dates') || '').split('/');
-
-    const ics = buildICS({
-      title: params.get('text'),
-      start,
-      end,
-      details: params.get('details'),
-      location: params.get('location')
-    });
-
-    // Rewrite the link itself (rather than intercepting the click) so Safari
-    // treats this as a normal tap-to-open-file, not a script-driven redirect.
-    link.setAttribute('href', 'data:text/calendar;charset=utf-8;base64,' + toBase64Utf8(ics));
+  document.querySelectorAll('a.add-to-cal[data-ics]').forEach(link => {
+    link.setAttribute('href', 'ics/' + link.dataset.ics + '.ics');
     link.removeAttribute('target');
   });
 }

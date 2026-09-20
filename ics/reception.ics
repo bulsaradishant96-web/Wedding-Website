@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:reception-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270213T123000Z
+DTEND:20270213T153000Z
+SUMMARY:Dishant & Nirshita - Reception
+DESCRIPTION:Reception for Dishant & Nirshita
+LOCATION:Shantivan Party Plot\, Vashiar\, Valsad
+END:VEVENT
+END:VCALENDAR

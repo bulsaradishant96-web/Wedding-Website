@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:varghodo-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270212T113000Z
+DTEND:20270212T143000Z
+SUMMARY:Dishant & Nirshita - Varghodo (Jaan Prasthan)
+DESCRIPTION:Varghodo (Jaan Prasthan) for Dishant & Nirshita
+LOCATION:Navsari
+END:VEVENT
+END:VCALENDAR

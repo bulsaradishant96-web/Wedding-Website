@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:gruh-shantak-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270211T083000Z
+DTEND:20270211T103000Z
+SUMMARY:Dishant & Nirshita - Gruh Shantak
+DESCRIPTION:Gruh Shantak ceremony for Dishant & Nirshita
+LOCATION:Shree Party Plot\, Vashiar\, Valsad
+END:VEVENT
+END:VCALENDAR

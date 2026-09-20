@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:pithi-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270210T033000Z
+DTEND:20270210T063000Z
+SUMMARY:Dishant & Nirshita - Pithi
+DESCRIPTION:Pithi ceremony for Dishant & Nirshita
+LOCATION:Sardar Heights\, Tithal Road\, Valsad
+END:VEVENT
+END:VCALENDAR

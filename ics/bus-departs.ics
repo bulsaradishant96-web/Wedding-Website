@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:bus-departs-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270212T080000Z
+DTEND:20270212T090000Z
+SUMMARY:Dishant & Nirshita - Bus Departs for Barat
+DESCRIPTION:Bus departs for Barat for Dishant & Nirshita
+LOCATION:Sardar Hts\, Valsad
+END:VEVENT
+END:VCALENDAR

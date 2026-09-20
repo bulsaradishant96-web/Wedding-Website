@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dishant & Nirshita Wedding//EN
+BEGIN:VEVENT
+UID:garba-night-dishant-nirshita@ngdb.me
+DTSTAMP:20260920T000000Z
+DTSTART:20270211T133000Z
+DTEND:20270211T163000Z
+SUMMARY:Dishant & Nirshita - Garba Night
+DESCRIPTION:Garba Night for Dishant & Nirshita
+LOCATION:Shree Party Plot\, Vashiar\, Valsad
+END:VEVENT
+END:VCALENDAR
